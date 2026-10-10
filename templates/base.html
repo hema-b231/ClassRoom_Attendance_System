@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}LectureFlow{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">L</span><span>Lecture<span>Flow</span></span></a>
+    <p class="side-label">LECTURER WORKSPACE</p>
+    <nav>
+      <a class="nav-link {{ 'active' if page == 'dashboard' }}" href="{{ url_for('dashboard') }}"><i>⌂</i>Overview</a>
+      <a class="nav-link {{ 'active' if page == 'timetable' }}" href="{{ url_for('timetable') }}"><i>▦</i>Weekly timetable</a>
+      <a class="nav-link {{ 'active' if page == 'attendance' }}" href="{{ url_for('take_attendance') }}"><i>◉</i>Take attendance</a>
+      <a class="nav-link {{ 'active' if page == 'records' }}" href="{{ url_for('records') }}"><i>☷</i>Attendance records</a>
+      <a class="nav-link {{ 'active' if page == 'analytics' }}" href="{{ url_for('analytics') }}"><i>◔</i>Analytics</a>
+      <a class="nav-link {{ 'active' if page == 'students' }}" href="{{ url_for('students') }}"><i>♙</i>Students</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="live-dot"></span> Face recognition ready</div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><button class="mobile-menu" type="button" aria-label="Open navigation">☰</button><div><p class="eyebrow">LECTURE ATTENDANCE SYSTEM</p><p class="date-display">{{ today_label|default('Manage every session with clarity') }}</p></div><div class="profile"><span>Lecturer</span><b>LF</b></div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}"><span>{{ '✓' if category == 'success' else '!' }}</span>{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
